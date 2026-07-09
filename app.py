@@ -20,32 +20,32 @@ def cari_artikel_by_keyword(keyword):
         # KDRT dan Kekerasan
         "pelecehan": 5, "kekerasan seksual": 5, "tpks": 5,
         "kdrt": 3, "kekerasan rumah tangga": 3,
-        
+
         # Penipuan
         "penipuan": 2, "penipuan online": 2, "belanja online": 2,
-        
+
         # PHK
         "phk": 4, "dipecat": 4, "pesangon": 4,
-        
+
         # Lowongan kerja palsu
         "loker palsu": 6, "tipu loker": 6, "lowongan kerja": 6,
-        
+
         # Pencemaran nama baik
         "pencemaran nama baik": 7, "dihina": 7, "ite": 7,
-        
+
         # Tanah
         "tanah": 8, "sengketa tanah": 8, "warisan": 8,
-        
+
         # Pinjol
         "pinjol": 1, "pinjaman online": 1,
-        
+
         # Pencurian
         "pencurian": 9, "dicuri": 9, "maling": 9,
-        
+
         # Perceraian
         "perceraian": 10, "cerai": 10,
     }
-    
+
     for kata, artikel_id in mapping_keyword.items():
         if kata in keyword_lower:
             for artikel in db["artikel"]:
@@ -53,431 +53,444 @@ def cari_artikel_by_keyword(keyword):
                     return artikel
     return None
 
-# Custom CSS - Enhanced Professional Design
+# ============================================================
+# Custom CSS -- "Buku Hukum" (law-ledger) design system, v2 layout
+# ============================================================
 st.markdown("""
 <style>
-    /* Reset and base styles */
-    .main {
-        padding: 0rem 1rem;
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+    :root {
+        --ink: #0F1B33;
+        --ink-soft: #2C3A63;
+        --paper: #F7F8FC;
+        --surface: #FFFFFF;
+        --border: #DDE3F0;
+        --brass: #C89A3C;
+        --brass-light: #E3BE6B;
+        --brass-dark: #9C7526;
+        --forest: #0F8B6C;
+        --muted: #5B6478;
+        --danger: #C6402E;
     }
-    
+
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; color: var(--ink); }
+
+    h1, h2, h3, h4 {
+        font-family: 'Fraunces', serif !important;
+        font-weight: 600 !important;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+    }
+
+    code, .mono { font-family: 'IBM Plex Mono', monospace !important; }
+
+    .block-container { padding-top: 2rem; max-width: 1200px; }
+
     .stApp {
-        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        background:
+            repeating-linear-gradient(to bottom, transparent 0px, transparent 39px, rgba(200,154,60,0.05) 40px),
+            var(--paper);
     }
-    
-    /* Enhanced Header styling */
-    .main-header {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-        padding: 3.5rem 2.5rem;
-        border-radius: 1.5rem;
-        color: white;
-        margin-bottom: 2.5rem;
-        text-align: center;
+
+    section[data-testid="stSidebar"] { background: var(--surface); border-right: 1px solid var(--border); }
+    section[data-testid="stSidebar"] hr { border-color: var(--border); }
+
+    /* ============================================================
+       HERO (Beranda) -- two column grid
+       ============================================================ */
+    .hero-wrap {
         position: relative;
+        background: linear-gradient(155deg, var(--ink) 0%, #16264A 60%, #1B2E56 100%);
+        border-radius: 20px;
+        padding: 3rem 3rem;
+        color: var(--paper);
         overflow: hidden;
-        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+        box-shadow: 0 20px 45px -20px rgba(15,27,51,0.45);
+        margin-bottom: 1.75rem;
     }
-    
-    .main-header::before {
-        content: '';
+    .hero-wrap::before {
+        content: "\\00A7";
         position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-        transform: rotate(45deg);
+        right: -0.5rem; top: -3.5rem;
+        font-family: 'Fraunces', serif;
+        font-size: 13rem; font-weight: 700;
+        color: rgba(247,248,252,0.05);
+        line-height: 1; pointer-events: none;
     }
-    
-    .main-header h1 {
-        font-size: 2.8rem;
-        margin-bottom: 0.75rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 2.5rem;
+        align-items: center;
         position: relative;
-        z-index: 1;
     }
-    
-    .main-header p {
-        font-size: 1.2rem;
-        opacity: 0.9;
+    .hero-eyebrow {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--brass-light);
+        background: rgba(227,190,107,0.12);
+        border: 1px solid rgba(227,190,107,0.3);
+        padding: 0.3rem 0.75rem; border-radius: 999px;
+        margin-bottom: 1rem;
+    }
+    .hero-wrap h1 { color: var(--paper) !important; font-size: 2.6rem; line-height: 1.15; margin: 0 0 0.9rem 0; }
+    .hero-wrap p.hero-sub { font-size: 1.08rem; opacity: 0.78; margin: 0 0 1.5rem 0; max-width: 480px; }
+    .hero-stat-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .stat-pill {
+        display: flex; flex-direction: column; gap: 0.15rem;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 12px; padding: 0.65rem 1rem; min-width: 108px;
+    }
+    .stat-pill .num { font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 700; color: var(--brass-light); }
+    .stat-pill .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75; }
+
+    .hero-panel {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 16px;
+        padding: 1.5rem 1.5rem 1.25rem;
+        backdrop-filter: blur(2px);
+    }
+    .hero-panel .hp-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.65; margin-bottom: 0.9rem; }
+    .hero-cat-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .hero-cat-row:last-child { border-bottom: none; }
+    .hero-cat-icon { width: 34px; height: 34px; border-radius: 9px; background: rgba(227,190,107,0.15); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .hero-cat-text b { font-size: 0.87rem; }
+    .hero-cat-text span { display: block; font-size: 0.74rem; opacity: 0.65; }
+
+    /* ============================================================
+       PAGE HEADER -- icon badge + title (used on all sub-pages)
+       ============================================================ */
+    .page-header {
         position: relative;
-        z-index: 1;
-        font-weight: 300;
-    }
-    
-    .main-header .highlight {
-        color: #818cf8;
-        font-weight: 600;
-    }
-    
-    /* Enhanced Card styling */
-    .card {
-        background: white;
-        padding: 1.75rem;
-        border-radius: 1.25rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        height: 100%;
-        position: relative;
+        background: linear-gradient(155deg, var(--ink) 0%, #16264A 100%);
+        border-radius: 16px;
+        padding: 1.85rem 2rem;
+        color: var(--paper);
+        margin-bottom: 1.75rem;
         overflow: hidden;
+        box-shadow: 0 14px 32px -16px rgba(15,27,51,0.4);
     }
-    
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+    .page-header::before {
+        content: "\\00A7";
+        position: absolute; right: 0.5rem; top: -2.5rem;
+        font-family: 'Fraunces', serif; font-size: 9rem; font-weight: 700;
+        color: rgba(247,248,252,0.05); line-height: 1; pointer-events: none;
     }
-    
-    .card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-        border-color: #c7d2fe;
+    .ph-row { display: flex; align-items: center; gap: 1.1rem; position: relative; }
+    .header-icon-badge {
+        width: 54px; height: 54px; border-radius: 14px; flex-shrink: 0;
+        background: rgba(227,190,107,0.14); border: 1px solid rgba(227,190,107,0.32);
+        display: flex; align-items: center; justify-content: center; font-size: 1.55rem;
     }
-    
-    .card:hover::before {
-        opacity: 1;
+    .page-header h1 { color: var(--paper) !important; font-size: 1.55rem; margin: 0; }
+    .page-header p { color: var(--paper); opacity: 0.72; margin: 0.3rem 0 0 0; font-size: 0.95rem; }
+
+    /* ============================================================
+       Section labels
+       ============================================================ */
+    .eyebrow {
+        display: flex; align-items: center; gap: 0.6rem;
+        font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; font-weight: 600;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass-dark);
+        margin: 0 0 0.35rem 0;
     }
-    
-    .card-icon {
-        font-size: 2.5rem;
-        margin-bottom: 0.75rem;
-        display: inline-block;
+    .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--brass); display: inline-block; }
+    .section-heading { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .section-heading h2 { margin: 0; font-size: 1.5rem; }
+    .section-heading .sh-note { color: var(--muted); font-size: 0.88rem; }
+
+    /* ============================================================
+       Service cards -- horizontal icon-left layout
+       ============================================================ */
+    .service-h-card {
+        display: flex; gap: 1rem; align-items: flex-start;
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: 14px; padding: 1.25rem 1.3rem;
+        height: 100%; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        box-shadow: 0 2px 10px -6px rgba(15,27,51,0.1);
     }
-    
-    .card h3 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #1e293b;
-        margin: 0.5rem 0;
+    .service-h-card:hover { transform: translateY(-3px); box-shadow: 0 16px 28px -14px rgba(15,27,51,0.22); border-color: var(--brass-light); }
+    .service-icon {
+        width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+        background: linear-gradient(135deg, var(--brass-light), var(--brass));
+        display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+        box-shadow: 0 6px 14px -6px rgba(200,154,60,0.55);
     }
-    
-    .card p {
-        color: #64748b;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin: 0;
+    .service-h-card h4 { margin: 0 0 0.25rem 0; font-size: 1.02rem; }
+    .service-h-card p { margin: 0; color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+
+    /* ============================================================
+       Featured / list article rows
+       ============================================================ */
+    .featured-card {
+        background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+        padding: 1.75rem; height: 100%;
+        border-top: 4px solid var(--brass);
+        box-shadow: 0 4px 16px -8px rgba(15,27,51,0.12);
     }
-    
-    /* Enhanced Stat card */
-    .stat-card {
-        background: white;
-        padding: 1.75rem 1.5rem;
-        border-radius: 1.25rem;
-        text-align: center;
-        border: 1px solid rgba(226, 232, 240, 0.8);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
+    .featured-card h3 { font-size: 1.3rem; margin: 0.7rem 0 0.5rem 0; }
+    .article-row-item {
+        display: flex; gap: 0.9rem; align-items: flex-start;
+        background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+        padding: 0.95rem 1.05rem; margin-bottom: 0.7rem;
+        border-left: 4px solid var(--brass-light);
     }
-    
-    .stat-card::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #6366f1, #8b5cf6);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+    .article-row-item .ari-num { font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.4rem; color: var(--border); flex-shrink: 0; width: 28px; }
+    .article-row-item h5 { margin: 0 0 0.2rem 0; font-size: 0.98rem; }
+    .article-row-item p { margin: 0; color: var(--muted); font-size: 0.82rem; }
+
+    /* ============================================================
+       Generic cards / badges
+       ============================================================ */
+    .card, .article-card {
+        position: relative; background: var(--surface); padding: 1.5rem 1.4rem;
+        border-radius: 14px; border: 1px solid var(--border);
+        transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        overflow: hidden; margin-bottom: 1rem; height: 100%;
+        box-shadow: 0 2px 10px -6px rgba(15,27,51,0.1);
     }
-    
-    .stat-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        border-color: #c7d2fe;
-    }
-    
-    .stat-card:hover::after {
-        opacity: 1;
-    }
-    
-    .stat-number {
-        font-size: 2.5rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    
-    .stat-label {
-        color: #64748b;
-        font-size: 0.875rem;
-        font-weight: 500;
-        margin-top: 0.25rem;
-    }
-    
-    /* Enhanced Button styling */
-    .stButton > button {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        color: white;
-        border: none;
-        border-radius: 0.75rem;
-        padding: 0.6rem 1.25rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
-        letter-spacing: 0.025em;
-    }
-    
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
-        background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    }
-    
-    .stButton > button:active {
-        transform: scale(0.98);
-    }
-    
-    /* Enhanced Badge */
+    .card:hover, .article-card:hover { transform: translateY(-3px); box-shadow: 0 16px 28px -14px rgba(15,27,51,0.2); border-color: var(--brass-light); }
+    .card h3, .card h4, .article-card h4 { margin-top: 0.6rem; font-size: 1.08rem; }
+
     .badge {
-        display: inline-block;
-        padding: 0.35rem 0.9rem;
-        border-radius: 9999px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.025em;
-        text-transform: uppercase;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        display: inline-block; font-family: 'IBM Plex Mono', monospace;
+        padding: 0.22rem 0.7rem; border-radius: 999px; border: none;
+        font-size: 0.66rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
     }
-    
-    .badge-pidana { 
-        background: linear-gradient(135deg, #fef2f2, #fee2e2);
-        color: #dc2626; 
+    .badge-pidana { background: #FDEAE7; color: #C6402E; }
+    .badge-perdata { background: #E7EEFE; color: #1D4ED8; }
+    .badge-keluarga { background: #F3EBFE; color: #7C3AED; }
+    .badge-ketenagakerjaan { background: #FEF3D6; color: #B45309; }
+
+    /* ============================================================
+       Stat cards (used in Admin)
+       ============================================================ */
+    .stat-card {
+        text-align: center; padding: 1.1rem 0.5rem 0.9rem; border-radius: 14px;
+        background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--brass);
     }
-    
-    .badge-perdata { 
-        background: linear-gradient(135deg, #eff6ff, #dbeafe);
-        color: #2563eb; 
+    .stat-number { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--ink); line-height: 1.1; }
+    .stat-label { font-family: 'IBM Plex Mono', monospace; color: var(--muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.35rem; }
+
+    /* ============================================================
+       Buttons / inputs
+       ============================================================ */
+    .stButton > button, .stFormSubmitButton > button, .stDownloadButton > button {
+        background: var(--ink); color: var(--paper) !important; border: 1px solid var(--ink);
+        border-radius: 8px; padding: 0.5rem 1.1rem; font-weight: 600; font-size: 0.86rem;
+        letter-spacing: 0.01em; transition: all .18s ease; box-shadow: none;
     }
-    
-    .badge-keluarga { 
-        background: linear-gradient(135deg, #faf5ff, #f3e8ff);
-        color: #7c3aed; 
+    .stButton > button:hover, .stFormSubmitButton > button:hover, .stDownloadButton > button:hover {
+        background: var(--brass); border-color: var(--brass); color: var(--ink) !important;
+        transform: translateY(-1px); box-shadow: 0 8px 16px -6px rgba(200,154,60,0.45);
     }
-    
-    .badge-ketenagakerjaan { 
-        background: linear-gradient(135deg, #fffbeb, #fef3c7);
-        color: #d97706; 
+    .stTextInput input, .stTextArea textarea, .stNumberInput input,
+    .stSelectbox div[data-baseweb="select"] > div {
+        border-radius: 8px !important; border-color: var(--border) !important;
     }
-    
-    /* Enhanced Chat message styling */
-    .chat-message-user {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        color: white;
-        padding: 0.75rem 1.25rem;
-        border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
-        margin: 0.5rem 0;
-        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
-        max-width: 80%;
-        margin-left: auto;
+
+    /* Chip-style filter buttons (category / topic pills) */
+    div[data-testid="stHorizontalBlock"] .chip-row .stButton > button {
+        border-radius: 999px !important;
+        background: var(--surface); color: var(--ink) !important; border: 1px solid var(--border);
+        font-size: 0.78rem; padding: 0.35rem 0.5rem;
     }
-    
-    .chat-message-bot {
-        background: white;
-        color: #1e293b;
-        padding: 0.75rem 1.25rem;
-        border-radius: 0.25rem 1.25rem 1.25rem 1.25rem;
-        margin: 0.5rem 0;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-        max-width: 80%;
+
+    .stTabs [data-baseweb="tab-list"] { gap: 0.5rem; }
+    .stTabs [aria-selected="true"] { color: var(--brass-dark) !important; }
+
+    div[data-testid="stMetric"] {
+        background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--brass);
+        border-radius: 12px; padding: 0.9rem 1rem;
     }
-    
-    /* Enhanced Article card */
-    .article-card {
-        border: 1px solid #e2e8f0;
-        border-radius: 1rem;
-        padding: 1.25rem;
-        margin-bottom: 1.25rem;
-        background: white;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+
+    hr { border-color: var(--border) !important; }
+
+    /* ============================================================
+       CTA banner
+       ============================================================ */
+    .cta-banner {
+        background: linear-gradient(155deg, var(--ink) 0%, #16264A 100%);
+        border-radius: 20px; padding: 2.75rem; position: relative; overflow: hidden;
+        display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
     }
-    
-    .article-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-        border-color: #c7d2fe;
+    .cta-banner::before {
+        content: "\\00A7"; position: absolute; right: 0.5rem; top: -2.75rem;
+        font-family: 'Fraunces', serif; font-size: 10rem; font-weight: 700;
+        color: rgba(247,248,252,0.05); line-height: 1;
     }
-    
-    /* Enhanced Footer */
-    .footer {
-        text-align: center;
-        padding: 2.5rem;
-        margin-top: 4rem;
-        border-top: 1px solid #e2e8f0;
-        color: #94a3b8;
-        background: white;
-        border-radius: 1rem;
+    .cta-text h2 { color: var(--paper) !important; font-size: 1.7rem; margin: 0 0 0.4rem 0; position: relative; }
+    .cta-text p { color: var(--paper); opacity: 0.72; margin: 0; font-size: 0.98rem; position: relative; max-width: 420px; }
+
+    /* ============================================================
+       Chatbot layout helpers
+       ============================================================ */
+    .chat-side-card {
+        background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+        padding: 1.1rem 1.2rem; margin-bottom: 0.9rem;
     }
-    
-    /* Enhanced Sidebar */
-    .css-1d391kg {
-        background: white;
-        border-right: 1px solid #e2e8f0;
+    .chat-side-card h5 { margin: 0 0 0.6rem 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--brass-dark); font-family: 'IBM Plex Mono', monospace; }
+    [data-testid="stChatMessage"] { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.4rem 0.6rem; margin-bottom: 0.6rem; }
+
+    /* ============================================================
+       Article detail panel
+       ============================================================ */
+    .article-detail {
+        background: var(--surface); border-radius: 16px; padding: 2rem; border: 1px solid var(--border);
+        margin-top: 0.5rem; box-shadow: 0 4px 20px -12px rgba(15,27,51,0.15);
     }
-    
-    /* Container styling */
-    .section-title {
-        font-size: 1.875rem;
-        font-weight: 700;
-        color: #1e293b;
-        margin-bottom: 1.5rem;
-        letter-spacing: -0.025em;
+    .article-detail-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin: 0.9rem 0 1.4rem 0; color: var(--muted); font-size: 0.85rem; }
+    .article-detail-body { border-top: 1px solid var(--border); padding-top: 1.4rem; line-height: 1.85; }
+
+    /* ============================================================
+       Advokat grid card
+       ============================================================ */
+    .advokat-grid-card {
+        background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+        padding: 1.4rem; text-align: center; height: 100%;
+        box-shadow: 0 2px 10px -6px rgba(15,27,51,0.1);
+        transition: transform .18s ease, box-shadow .18s ease;
     }
-    
-    .section-subtitle {
-        color: #64748b;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
+    .advokat-grid-card:hover { transform: translateY(-3px); box-shadow: 0 16px 28px -14px rgba(15,27,51,0.2); }
+    .advokat-avatar {
+        width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 0.75rem;
+        display: flex; align-items: center; justify-content: center; color: var(--paper);
+        font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700;
+        background: linear-gradient(135deg, var(--ink), var(--ink-soft)); border: 2px solid var(--brass);
     }
-    
-    /* CTA Box */
-    .cta-box {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-        padding: 3.5rem;
-        border-radius: 1.5rem;
-        text-align: center;
-        color: white;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+    .advokat-grid-card h4 { margin: 0.2rem 0 0.35rem 0; font-size: 1.05rem; }
+    .advokat-meta-grid { display: flex; flex-direction: column; gap: 0.3rem; color: var(--muted); font-size: 0.82rem; margin: 0.7rem 0; }
+    .advokat-contact-grid { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.78rem; }
+
+    /* ============================================================
+       Footer
+       ============================================================ */
+    .app-footer {
+        margin-top: 3.5rem; padding-top: 2.25rem; border-top: 1px solid var(--border);
     }
-    
-    .cta-box::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-        transform: rotate(45deg);
+    .app-footer .af-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
+    .app-footer h4 { font-size: 1.05rem; margin: 0 0 0.5rem 0; }
+    .app-footer p, .app-footer li { color: var(--muted); font-size: 0.85rem; line-height: 1.7; }
+    .app-footer ul { list-style: none; padding: 0; margin: 0; }
+    .app-footer .af-bottom { text-align: center; color: var(--muted); font-size: 0.78rem; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+
+    /* ============================================================
+       Sidebar nav polish
+       ============================================================ */
+    .sidebar-brand { display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0 0.9rem; }
+    .sidebar-brand .sb-badge { width: 38px; height: 38px; border-radius: 10px; background: var(--ink); color: var(--brass-light); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .sidebar-brand .sb-text b { display: block; font-family: 'Fraunces', serif; font-size: 1.05rem; line-height: 1.1; }
+    .sidebar-brand .sb-text span { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.04em; }
+
+    section[data-testid="stSidebar"] .nav-link { border-radius: 8px !important; font-family: 'Inter', sans-serif !important; margin: 0.15rem 0 !important; }
+    section[data-testid="stSidebar"] .nav-link:hover { background-color: #EAF0FF !important; }
+    section[data-testid="stSidebar"] .nav-link-selected { border-radius: 8px !important; box-shadow: inset 3px 0 0 var(--brass); }
+    section[data-testid="stSidebar"] .menu-title { font-family: 'Fraunces', serif !important; }
+
+    a:focus-visible, button:focus-visible, .stButton > button:focus-visible {
+        outline: 2px solid var(--brass) !important; outline-offset: 2px;
     }
-    
-    .cta-box h2 {
-        font-size: 2.25rem;
-        margin-bottom: 0.75rem;
-        position: relative;
-        z-index: 1;
-    }
-    
-    .cta-box p {
-        font-size: 1.1rem;
-        opacity: 0.9;
-        position: relative;
-        z-index: 1;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-    
-    /* Divider */
-    .custom-divider {
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
-        margin: 2.5rem 0;
-    }
-    
-    /* Input styling */
-    .stTextInput > div > div > input,
-    .stTextArea > div > div > textarea {
-        border-radius: 0.75rem;
-        border: 1px solid #e2e8f0;
-        transition: all 0.3s ease;
-    }
-    
-    .stTextInput > div > div > input:focus,
-    .stTextArea > div > div > textarea:focus {
-        border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-    }
-    
-    /* Selectbox styling */
-    .stSelectbox > div > div {
-        border-radius: 0.75rem;
-        border: 1px solid #e2e8f0;
-    }
-    
-    /* Expander styling */
-    .streamlit-expanderHeader {
-        background: white;
-        border-radius: 0.75rem !important;
-        border: 1px solid #e2e8f0;
-        font-weight: 500;
-        color: #1e293b;
-    }
-    
-    .streamlit-expanderHeader:hover {
-        border-color: #c7d2fe;
-        background: #f8fafc;
-    }
-    
-    /* Tab styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 0.5rem;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 0.75rem;
-        padding: 0.5rem 1rem;
-        font-weight: 500;
-        background: transparent;
-        transition: all 0.3s ease;
-    }
-    
-    .stTabs [data-baseweb="tab"]:hover {
-        background: #f1f5f9;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        color: white !important;
-    }
-    
-    /* Info box styling */
-    .info-box {
-        background: #f8fafc;
-        border-left: 4px solid #6366f1;
-        padding: 1.25rem;
-        border-radius: 0.75rem;
-        margin: 1rem 0;
-    }
-    
-    /* Responsive design */
-    @media (max-width: 768px) {
-        .main-header h1 {
-            font-size: 2rem;
+
+    @media (prefers-reduced-motion: no-preference) {
+        .hero-wrap, .page-header, .card, .article-card, .stat-card, .service-h-card, .featured-card, .advokat-grid-card {
+            animation: legalassist-fade-up 0.4s ease both;
         }
-        
-        .stat-number {
-            font-size: 2rem;
+    }
+    @keyframes legalassist-fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 992px) {
+        .hero-grid { grid-template-columns: 1fr; }
+        .hero-panel { margin-top: 0.5rem; }
+        .hero-wrap { padding: 2.25rem 1.75rem; }
+        .hero-wrap h1 { font-size: 2rem; }
+        .app-footer .af-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+        .block-container { padding-left: 1rem; padding-right: 1rem; }
+        .hero-wrap { padding: 1.75rem 1.25rem; border-radius: 14px; }
+        .hero-wrap h1 { font-size: 1.55rem; }
+        .hero-wrap::before, .page-header::before, .cta-banner::before { display: none; }
+        .hero-panel { padding: 1.1rem; }
+        .page-header { padding: 1.4rem 1.15rem; border-radius: 12px; }
+        .header-icon-badge { width: 42px; height: 42px; font-size: 1.2rem; border-radius: 10px; }
+        .page-header h1 { font-size: 1.2rem; }
+        .page-header p { font-size: 0.82rem; }
+
+        div[data-testid="stHorizontalBlock"] { flex-direction: column !important; }
+        div[data-testid="stHorizontalBlock"] > div[data-testid="column"] {
+            width: 100% !important; flex: 1 1 100% !important; min-width: 100% !important;
         }
-        
-        .card {
-            padding: 1.25rem;
-        }
-        
-        .cta-box {
-            padding: 2rem 1.5rem;
-        }
-        
-        .cta-box h2 {
-            font-size: 1.75rem;
-        }
+
+        .card, .article-card, .service-h-card, .featured-card, .advokat-grid-card { padding: 1.15rem; }
+        .stat-number { font-size: 1.6rem; }
+        .cta-banner { padding: 1.75rem 1.35rem; flex-direction: column; text-align: center; }
+        .app-footer .af-grid { grid-template-columns: 1fr; gap: 1.4rem; text-align: left; }
+
+        h1 { font-size: 1.4rem !important; }
+        h2 { font-size: 1.2rem !important; }
+        h3 { font-size: 1.05rem !important; }
+    }
+
+    @media (min-width: 641px) and (max-width: 900px) {
+        div[data-testid="stHorizontalBlock"] > div[data-testid="column"] { min-width: 45% !important; flex: 1 1 45% !important; }
     }
 </style>
 """, unsafe_allow_html=True)
+
+
+# ---------------- Layout helper components ----------------
+def render_page_header(icon, title, subtitle):
+    st.markdown(f"""
+    <div class="page-header">
+        <div class="ph-row">
+            <div class="header-icon-badge">{icon}</div>
+            <div>
+                <h1>{title}</h1>
+                <p>{subtitle}</p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def render_footer():
+    st.markdown("""
+    <div class="app-footer">
+        <div class="af-grid">
+            <div>
+                <h4>⚖️ LegalAssist</h4>
+                <p>Platform konsultasi hukum digital yang menghubungkan masyarakat dengan informasi hukum yang jelas dan advokat terpercaya, kapan saja Anda butuhkan.</p>
+            </div>
+            <div>
+                <h4 style="font-size:0.95rem;">Layanan</h4>
+                <ul>
+                    <li>Chatbot Konsultasi</li>
+                    <li>Direktori Advokat</li>
+                    <li>Artikel Hukum</li>
+                    <li>FAQ Hukum</li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-size:0.95rem;">Kontak</h4>
+                <ul>
+                    <li>📞 (021) 5678-9012</li>
+                    <li>✉️ info@legalassist.id</li>
+                    <li>📍 Jl. Hukum No. 1, Jakarta Pusat</li>
+                </ul>
+            </div>
+        </div>
+        <div class="af-bottom">© 2026 LegalAssist — Solusi Hukum Digital Terpercaya</div>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 # Initialize session state
 if "admin_logged_in" not in st.session_state:
@@ -493,429 +506,382 @@ if "chatbot_selected_article" not in st.session_state:
     st.session_state.chatbot_selected_article = None
 if "show_article_list" not in st.session_state:
     st.session_state.show_article_list = False
+if "artikel_filter_kategori" not in st.session_state:
+    st.session_state.artikel_filter_kategori = "Semua"
+if "advokat_filter_spesialisasi" not in st.session_state:
+    st.session_state.advokat_filter_spesialisasi = "Semua"
 
-# Sidebar Navigation - Enhanced
+MENU_OPTIONS = ["Beranda", "Chatbot", "Advokat", "Artikel", "FAQ", "Kontak", "Admin"]
+
+# Allow other parts of the app (e.g. the homepage CTA) to programmatically jump tabs
+_manual_select = None
+if "force_nav" in st.session_state:
+    _target = st.session_state.pop("force_nav")
+    if _target in MENU_OPTIONS:
+        _manual_select = MENU_OPTIONS.index(_target)
+
+# Sidebar Navigation
 with st.sidebar:
     st.markdown("""
-    <div style="text-align: center; padding: 1rem 0 0.5rem 0;">
-        <div style="font-size: 2.5rem;">⚖️</div>
-        <h2 style="color: #1e293b; margin: 0; font-weight: 700;">LegalAssist</h2>
-        <p style="color: #64748b; font-size: 0.8rem; margin: 0;">Solusi Hukum Digital</p>
+    <div class="sidebar-brand">
+        <div class="sb-badge">⚖️</div>
+        <div class="sb-text">
+            <b>LegalAssist</b>
+            <span>KONSULTASI HUKUM DIGITAL</span>
+        </div>
     </div>
-    <hr style="border-color: #e2e8f0; margin: 1rem 0;">
     """, unsafe_allow_html=True)
-    
+    st.markdown("---")
+
     selected = option_menu(
         menu_title=None,
-        options=["Beranda", "Chatbot", "Advokat", "Artikel", "FAQ", "Kontak", "Admin"],
-        icons=["house-fill", "chat-dots-fill", "people-fill", "book-fill", "question-circle-fill", "envelope-fill", "shield-lock-fill"],
-        menu_icon=None,
+        options=MENU_OPTIONS,
+        icons=[
+            "house-door-fill",
+            "chat-dots-fill",
+            "person-badge-fill",
+            "journal-bookmark-fill",
+            "patch-question-fill",
+            "envelope-paper-fill",
+            "shield-lock-fill",
+        ],
         default_index=0,
+        manual_select=_manual_select,
+        key="main_menu",
         styles={
             "container": {"padding": "0!important", "background-color": "transparent"},
-            "icon": {"color": "#6366f1", "font-size": "1.1rem", "margin-right": "0.75rem"},
-            "nav-link": {
-                "font-size": "0.95rem", 
-                "text-align": "left", 
-                "margin": "0.25rem 0",
-                "padding": "0.6rem 1rem",
-                "border-radius": "0.75rem",
-                "color": "#475569",
-                "font-weight": "500",
-                "transition": "all 0.2s ease"
-            },
-            "nav-link-hover": {
-                "background-color": "#f1f5f9",
-                "color": "#1e293b"
-            },
-            "nav-link-selected": {
-                "background-color": "linear-gradient(135deg, #6366f1, #8b5cf6)",
-                "color": "white",
-                "font-weight": "600"
-            },
+            "icon": {"color": "#C89A3C", "font-size": "1.05rem"},
+            "nav-link": {"font-size": "0.9rem", "text-align": "left", "margin": "0.2rem 0", "border-radius": "8px"},
+            "nav-link-selected": {"background-color": "#0F1B33", "border-radius": "8px"},
         }
     )
-    
+
     st.markdown("---")
-    st.caption("📌 © 2026 LegalAssist")
-    st.caption("💡 Solusi Hukum Digital")
+    st.caption("© 2026 LegalAssist")
+    st.caption("Solusi Hukum Digital Terpercaya")
 
 # ============================================================
 # BERANDA PAGE
 # ============================================================
 if selected == "Beranda":
-    # Hero Section - Enhanced
-    st.markdown("""
-    <div class="main-header">
-        <h1>Solusi Hukum <span class="highlight">Ada di Sini</span></h1>
-        <p>Konsultasi masalah hukum Anda dengan cepat, mudah, dan terpercaya</p>
+    # ---------- Hero (two-column grid) ----------
+    st.markdown(f"""
+    <div class="hero-wrap">
+        <div class="hero-grid">
+            <div>
+                <div class="hero-eyebrow">⚖️ Platform Hukum Digital</div>
+                <h1>Solusi Hukum <span style="color:#E3BE6B;">Ada&nbsp;di&nbsp;Sini</span></h1>
+                <p class="hero-sub">Konsultasi masalah hukum Anda dengan cepat, mudah, dan terpercaya — ditemani chatbot cerdas dan jaringan advokat berpengalaman.</p>
+                <div class="hero-stat-row">
+                    <div class="stat-pill"><span class="num">{db['stats']['konsultasi']}</span><span class="lbl">Konsultasi</span></div>
+                    <div class="stat-pill"><span class="num">{db['stats']['advokat']}</span><span class="lbl">Advokat</span></div>
+                    <div class="stat-pill"><span class="num">{db['stats']['artikel']}</span><span class="lbl">Artikel</span></div>
+                    <div class="stat-pill"><span class="num">{db['stats']['pengguna']}</span><span class="lbl">Kasus</span></div>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <div class="hp-title">Kategori Populer</div>
+                <div class="hero-cat-row">
+                    <div class="hero-cat-icon">⚖️</div>
+                    <div class="hero-cat-text"><b>Pidana</b><span>Penipuan, pencurian, kekerasan</span></div>
+                </div>
+                <div class="hero-cat-row">
+                    <div class="hero-cat-icon">📋</div>
+                    <div class="hero-cat-text"><b>Perdata</b><span>Hutang, wanprestasi, sengketa</span></div>
+                </div>
+                <div class="hero-cat-row">
+                    <div class="hero-cat-icon">👨‍👩‍👧</div>
+                    <div class="hero-cat-text"><b>Keluarga</b><span>Perceraian, hak asuh anak</span></div>
+                </div>
+                <div class="hero-cat-row">
+                    <div class="hero-cat-icon">💼</div>
+                    <div class="hero-cat-text"><b>Ketenagakerjaan</b><span>PHK, pesangon, perselisihan</span></div>
+                </div>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Stats - Enhanced
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.markdown(f"""
-        <div class="stat-card">
-            <div class="stat-number">{db['stats']['konsultasi']}</div>
-            <div class="stat-label">Konsultasi Selesai</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown(f"""
-        <div class="stat-card">
-            <div class="stat-number">{db['stats']['advokat']}</div>
-            <div class="stat-label">Advokat Terdaftar</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col3:
-        st.markdown(f"""
-        <div class="stat-card">
-            <div class="stat-number">{db['stats']['artikel']}</div>
-            <div class="stat-label">Artikel Hukum</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col4:
-        st.markdown(f"""
-        <div class="stat-card">
-            <div class="stat-number">{db['stats']['pengguna']}</div>
-            <div class="stat-label">Kasus Tertangani</div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
-    
-    # Layanan - Enhanced
-    st.markdown('<h2 class="section-title">🎯 Layanan Kami</h2>', unsafe_allow_html=True)
-    st.markdown('<p class="section-subtitle">Apa yang bisa kami bantu?</p>', unsafe_allow_html=True)
-    
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.markdown("""
-        <div class="card" style="text-align: center;">
-            <div class="card-icon">💬</div>
-            <h3>Chatbot Konsultasi</h3>
-            <p>Konsultasi 24/7 dengan chatbot cerdas</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        st.markdown("""
-        <div class="card" style="text-align: center;">
-            <div class="card-icon">👨‍⚖️</div>
-            <h3>Direktori Advokat</h3>
-            <p>Temukan advokat berpengalaman</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col3:
-        st.markdown("""
-        <div class="card" style="text-align: center;">
-            <div class="card-icon">📚</div>
-            <h3>Artikel Hukum</h3>
-            <p>Perluas pengetahuan hukum Anda</p>
-        </div>
-        """, unsafe_allow_html=True)
-    with col4:
-        st.markdown("""
-        <div class="card" style="text-align: center;">
-            <div class="card-icon">❓</div>
-            <h3>FAQ Hukum</h3>
-            <p>Jawaban pertanyaan umum</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
-    
-    # Artikel Terbaru - Enhanced
-    st.markdown('<h2 class="section-title">📰 Artikel Hukum Terbaru</h2>', unsafe_allow_html=True)
-    cols = st.columns(3)
-    for idx, artikel in enumerate(db['artikel'][:3]):
-        with cols[idx]:
-            badge_class = f"badge-{artikel['kategori'].lower()}"
+
+    st.write("")
+
+    # ---------- Layanan (horizontal icon cards, 2x2) ----------
+    st.markdown("""
+    <div class="section-heading">
+        <div><div class="eyebrow">Layanan</div><h2>Apa yang Bisa Kami Bantu?</h2></div>
+        <div class="sh-note">4 layanan utama untuk masalah hukum Anda</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    layanan = [
+        ("💬", "Chatbot Konsultasi", "Konsultasi 24/7 dengan chatbot cerdas yang memandu setiap kasus."),
+        ("🧑‍⚖️", "Direktori Advokat", "Temukan advokat berpengalaman sesuai spesialisasi & kota Anda."),
+        ("📚", "Artikel Hukum", "Perluas pengetahuan hukum lewat artikel yang mudah dipahami."),
+        ("❓", "FAQ Hukum", "Jawaban cepat untuk pertanyaan-pertanyaan yang paling sering muncul."),
+    ]
+    r1 = st.columns(2)
+    r2 = st.columns(2)
+    for i, (icon, title, desc) in enumerate(layanan):
+        target = r1[i] if i < 2 else r2[i - 2]
+        with target:
             st.markdown(f"""
-            <div class="card">
-                <span class="badge {badge_class}">{artikel['kategori']}</span>
-                <h4 style="margin: 0.75rem 0 0.5rem 0; color: #1e293b;">{artikel['judul']}</h4>
-                <p style="color: #64748b; font-size: 0.9rem; line-height: 1.6;">{artikel['ringkasan'][:100]}...</p>
-                <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 0.75rem;">
-                    ✍ {artikel['penulis']} · 📅 {artikel['tanggal']}
-                </p>
+            <div class="service-h-card">
+                <div class="service-icon">{icon}</div>
+                <div><h4>{title}</h4><p>{desc}</p></div>
             </div>
             """, unsafe_allow_html=True)
-    
-    st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
-    
-    # CTA - Enhanced
+
+    st.write("")
+
+    # ---------- Artikel Terbaru (featured + list) ----------
     st.markdown("""
-    <div class="cta-box">
-        <h2>Siap Konsultasi Sekarang?</h2>
-        <p>Chatbot kami siap membantu Anda 24/7, gratis, dan tanpa perlu mendaftar.</p>
+    <div class="section-heading">
+        <div><div class="eyebrow">Bacaan</div><h2>Artikel Hukum Terbaru</h2></div>
+        <div class="sh-note">Diperbarui secara berkala oleh tim redaksi</div>
     </div>
     """, unsafe_allow_html=True)
+
+    latest = db['artikel'][:3]
+    if latest:
+        col_feat, col_list = st.columns([1.2, 1])
+        featured = latest[0]
+        with col_feat:
+            badge_class = f"badge-{featured['kategori'].lower()}"
+            st.markdown(f"""
+            <div class="featured-card">
+                <span class="badge {badge_class}">{featured['kategori']}</span>
+                <h3>{featured['judul']}</h3>
+                <p style="color:var(--muted); line-height:1.7;">{featured['ringkasan'][:220]}...</p>
+                <p style="color:#8891A6; font-size:0.78rem; margin-top:1rem;">✍ {featured['penulis']} · 📅 {featured['tanggal']} · 👁 {featured['baca']} dibaca</p>
+            </div>
+            """, unsafe_allow_html=True)
+        with col_list:
+            for idx, artikel in enumerate(latest[1:], start=2):
+                st.markdown(f"""
+                <div class="article-row-item">
+                    <div class="ari-num">{idx:02d}</div>
+                    <div>
+                        <h5>{artikel['judul']}</h5>
+                        <p>{artikel['ringkasan'][:80]}...</p>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+    st.write("")
+
+    # ---------- CTA ----------
+    st.markdown("""
+    <div class="cta-banner">
+        <div class="cta-text">
+            <h2>Siap Konsultasi Sekarang?</h2>
+            <p>Chatbot kami siap membantu Anda 24/7, gratis, dan tanpa perlu mendaftar.</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    st.write("")
+    col_cta = st.columns([2, 1, 2])
+    with col_cta[1]:
+        if st.button("💬 Mulai Konsultasi", use_container_width=True, key="home_cta_btn"):
+            st.session_state.force_nav = "Chatbot"
+            st.rerun()
+
+    render_footer()
 
 # ============================================================
 # CHATBOT PAGE
 # ============================================================
 elif selected == "Chatbot":
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%); 
-                padding: 2.5rem; border-radius: 1.5rem; color: white; margin-bottom: 2.5rem;
-                position: relative; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
-        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; 
-                    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); 
-                    transform: rotate(45deg);"></div>
-        <h1 style="margin: 0; font-weight: 700; position: relative; z-index: 1;">💬 Konsultasi Hukum</h1>
-        <p style="margin: 0.5rem 0 0 0; opacity: 0.9; position: relative; z-index: 1;">
-            Chatbot untuk membantu Anda memahami masalah hukum
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
+    render_page_header("💬", "Konsultasi Hukum", "Chatbot untuk membantu Anda memahami masalah hukum")
+
     # Cek apakah sedang menampilkan artikel dari chatbot
     if st.session_state.get("chatbot_selected_article"):
         artikel = st.session_state.chatbot_selected_article
-        
-        # Tombol kembali
+
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("← Kembali ke Chatbot", key="back_from_article", use_container_width=True):
+            if st.button("← Kembali ke Chatbot", key="back_from_article"):
                 st.session_state.chatbot_selected_article = None
                 st.rerun()
         with col2:
-            if st.button("📚 Daftar Artikel", key="list_from_article", use_container_width=True):
+            if st.button("📚 Daftar Artikel", key="list_from_article"):
                 st.session_state.chatbot_selected_article = None
                 st.session_state.show_article_list = True
                 st.rerun()
-        
-        # Tampilkan artikel lengkap
+
         badge_class = f"badge-{artikel['kategori'].lower()}"
         st.markdown(f"""
-        <div style="background: white; border-radius: 1.25rem; padding: 2.5rem; 
-                    border: 1px solid #e2e8f0; margin-top: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+        <div class="article-detail">
             <span class="badge {badge_class}">{artikel['kategori']}</span>
-            <h1 style="margin: 1rem 0 0.5rem 0; color: #1e293b;">{artikel['judul']}</h1>
-            <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; color: #64748b; font-size: 0.9rem;">
+            <h1 style="margin: 1rem 0 0.5rem 0;">{artikel['judul']}</h1>
+            <div class="article-detail-meta">
                 <span>✍ {artikel['penulis']}</span>
                 <span>📅 {artikel['tanggal']}</span>
                 <span>👁 {artikel['baca']} dibaca</span>
             </div>
-            <div style="border-top: 1px solid #e2e8f0; padding-top: 1.5rem; line-height: 1.8; color: #334155;">
-                {artikel['isi']}
-            </div>
+            <div class="article-detail-body">{artikel['isi']}</div>
         </div>
         """, unsafe_allow_html=True)
-    
+
     elif st.session_state.get("show_article_list"):
-        # Tampilkan daftar artikel yang bisa dibaca
-        st.markdown('<h2 class="section-title">📚 Daftar Artikel Hukum</h2>', unsafe_allow_html=True)
-        st.markdown('<p class="section-subtitle">Pilih artikel yang ingin Anda baca:</p>', unsafe_allow_html=True)
-        
-        # Tombol kembali ke chatbot
-        if st.button("← Kembali ke Chatbot", key="back_from_list", use_container_width=True):
+        st.markdown('<div class="eyebrow">Perpustakaan</div>', unsafe_allow_html=True)
+        st.markdown("## 📚 Daftar Artikel Hukum")
+        st.caption("Pilih artikel yang ingin Anda baca")
+
+        if st.button("← Kembali ke Chatbot", key="back_from_list"):
             st.session_state.show_article_list = False
             st.rerun()
-        
-        st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
-        
-        # Filter kategori artikel
+
+        st.write("")
+
         kategori_list = ["Semua"] + sorted(list(set([a["kategori"] for a in db["artikel"]])))
-        selected_kategori = st.selectbox("Filter Kategori", kategori_list, key="chatbot_article_filter")
-        
+        chip_cols = st.columns(len(kategori_list))
+        for i, kat in enumerate(kategori_list):
+            with chip_cols[i]:
+                if st.button(kat, key=f"chatbot_chip_{kat}", use_container_width=True):
+                    st.session_state.artikel_filter_kategori = kat
+
+        selected_kategori = st.session_state.artikel_filter_kategori
         filtered_artikel = db["artikel"] if selected_kategori == "Semua" else [a for a in db["artikel"] if a["kategori"] == selected_kategori]
-        
-        st.markdown(f"<p style='color: #64748b; margin-bottom: 1.5rem;'>Menampilkan {len(filtered_artikel)} artikel</p>", unsafe_allow_html=True)
-        
-        # Tampilkan artikel dalam bentuk list
+        st.markdown(f"<p style='color: var(--muted); margin: 1rem 0;'>Menampilkan {len(filtered_artikel)} artikel</p>", unsafe_allow_html=True)
+
+        grid_cols = st.columns(2)
         for idx, artikel in enumerate(filtered_artikel):
             badge_class = f"badge-{artikel['kategori'].lower()}"
-            with st.container():
+            with grid_cols[idx % 2]:
                 st.markdown(f"""
-                <div class="article-card">
+                <div class="card">
                     <span class="badge {badge_class}">{artikel['kategori']}</span>
-                    <h4 style="margin: 0.5rem 0; color: #1e293b;">{artikel['judul']}</h4>
-                    <p style="color: #64748b; font-size: 0.9rem; margin: 0.5rem 0; line-height: 1.6;">{artikel['ringkasan']}</p>
-                    <p style="color: #94a3b8; font-size: 0.8rem;">✍ {artikel['penulis']} · 📅 {artikel['tanggal']} · 👁 {artikel['baca']} dibaca</p>
+                    <h4>{artikel['judul']}</h4>
+                    <p style="color: var(--muted); font-size: 0.85rem;">{artikel['ringkasan']}</p>
+                    <p style="color: #8891A6; font-size: 0.75rem;">✍ {artikel['penulis']} · 📅 {artikel['tanggal']} · 👁 {artikel['baca']} dibaca</p>
                 </div>
                 """, unsafe_allow_html=True)
-                
-                if st.button(f"📖 Baca Selengkapnya", key=f"read_artikel_{artikel['id']}_{idx}", use_container_width=True):
+                if st.button("📖 Baca Selengkapnya", key=f"read_artikel_{artikel['id']}_{idx}", use_container_width=True):
                     st.session_state.chatbot_selected_article = artikel
                     st.session_state.show_article_list = False
                     st.rerun()
-        
-        st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
+
+        st.markdown("---")
         if st.button("← Kembali ke Chatbot", key="back_from_list_bottom", use_container_width=True):
             st.session_state.show_article_list = False
             st.rerun()
-    
+
     else:
-        # Sidebar info untuk chatbot - Enhanced
-        with st.sidebar:
+        # ---------- Two column layout: chat history (left) + quick-access panel (right) ----------
+        col_chat, col_side = st.columns([2, 1])
+
+        with col_side:
             st.markdown("""
-            <div style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
-                        padding: 1.25rem; border-radius: 1rem; border: 1px solid #e2e8f0;">
-                <h4 style="color: #1e293b; margin: 0 0 0.5rem 0;">📋 Kategori Tersedia</h4>
+            <div class="chat-side-card">
+                <h5>Kategori Tersedia</h5>
             </div>
             """, unsafe_allow_html=True)
             st.markdown("""
-            <div style="padding: 0.25rem 0;">
-                <span style="color: #475569;">• ⚖️ Pidana (Penipuan, Pencurian)</span><br>
-                <span style="color: #475569;">• 📋 Perdata (Hutang, Wanprestasi)</span><br>
-                <span style="color: #475569;">• 👨‍👩‍👧 Keluarga (Perceraian, Hak Asuh)</span><br>
-                <span style="color: #475569;">• 💼 Ketenagakerjaan (PHK, Perselisihan)</span>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("---")
-            
+            - ⚖️ **Pidana** — Penipuan, Pencurian
+            - 📋 **Perdata** — Hutang, Wanprestasi
+            - 👨‍👩‍👧 **Keluarga** — Perceraian, Hak Asuh
+            - 💼 **Ketenagakerjaan** — PHK, Perselisihan
+            """)
+
             st.markdown("""
-            <div style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
-                        padding: 1.25rem; border-radius: 1rem; border: 1px solid #e2e8f0;">
-                <h4 style="color: #1e293b; margin: 0 0 0.5rem 0;">📚 Baca Artikel</h4>
+            <div class="chat-side-card" style="margin-top:0.9rem;">
+                <h5>Baca Artikel</h5>
             </div>
             """, unsafe_allow_html=True)
-            st.markdown("""
-            <div style="padding: 0.25rem 0;">
-                <span style="color: #475569; font-size: 0.9rem;">Contoh perintah:</span><br>
-                <code style="font-size: 0.8rem; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 0.25rem;">baca artikel pelecehan</code><br>
-                <code style="font-size: 0.8rem; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 0.25rem;">artikel KDRT</code><br>
-                <code style="font-size: 0.8rem; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 0.25rem;">baca artikel penipuan online</code>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            if st.button("📖 Baca Artikel Hukum", use_container_width=True, key="sidebar_article_btn"):
+            st.caption("Ketik `baca artikel [topik]`, contoh: `baca artikel PHK`")
+            if st.button("📖 Buka Daftar Artikel", use_container_width=True, key="sidebar_article_btn"):
                 st.session_state.show_article_list = True
                 st.rerun()
-            
-            st.markdown("---")
-            
+
             st.markdown("""
-            <div style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
-                        padding: 1.25rem; border-radius: 1rem; border: 1px solid #e2e8f0;">
-                <h4 style="color: #1e293b; margin: 0 0 0.5rem 0;">📌 Cara Penggunaan</h4>
+            <div class="chat-side-card" style="margin-top:0.9rem;">
+                <h5>Cara Penggunaan</h5>
             </div>
             """, unsafe_allow_html=True)
             st.markdown("""
-            <div style="padding: 0.25rem 0; color: #475569; font-size: 0.9rem;">
-                1. Ceritakan masalah hukum Anda<br>
-                2. Jawab pertanyaan chatbot<br>
-                3. Terima hasil & rekomendasi
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.markdown("---")
+            1. Ceritakan masalah hukum Anda
+            2. Jawab pertanyaan chatbot
+            3. Terima hasil & rekomendasi
+            """)
+
             if st.button("🔄 Mulai Ulang Konsultasi", use_container_width=True):
                 st.session_state.fsm.reset()
                 st.session_state.messages = []
                 st.rerun()
-        
-        st.markdown('<div class="custom-divider"></div>', unsafe_allow_html=True)
-        
-        # Display chat history
-        for idx, msg in enumerate(st.session_state.messages):
-            if msg["role"] == "user":
-                with st.chat_message("user"):
-                    st.write(msg["content"])
-            else:
-                with st.chat_message("assistant", avatar="⚖️"):
-                    st.write(msg["content"])
-                    
-                    # Jika ada tombol artikel di pesan, tampilkan
-                    if "artikel_link" in msg and msg["artikel_link"]:
-                        if msg["artikel_link"] in ARTIKEL_LINK:
-                            artikel_info = ARTIKEL_LINK[msg["artikel_link"]]
-                            for artikel in db["artikel"]:
-                                if artikel["id"] == artikel_info["id"]:
-                                    if st.button(f"📖 Baca Artikel: {artikel['judul']}", key=f"btn_artikel_{artikel['id']}_{idx}", use_container_width=True):
-                                        st.session_state.chatbot_selected_article = artikel
-                                        st.rerun()
-                                    break
-        
-        # Chat input
+
+        with col_chat:
+            if not st.session_state.messages:
+                st.info("👋 Halo! Ceritakan masalah hukum Anda, atau ketik **baca artikel [topik]** untuk membaca artikel.")
+
+            for idx, msg in enumerate(st.session_state.messages):
+                if msg["role"] == "user":
+                    with st.chat_message("user"):
+                        st.write(msg["content"])
+                else:
+                    with st.chat_message("assistant", avatar="⚖️"):
+                        st.write(msg["content"])
+                        if "artikel_link" in msg and msg["artikel_link"]:
+                            if msg["artikel_link"] in ARTIKEL_LINK:
+                                artikel_info = ARTIKEL_LINK[msg["artikel_link"]]
+                                for artikel in db["artikel"]:
+                                    if artikel["id"] == artikel_info["id"]:
+                                        if st.button(f"📖 Baca Artikel: {artikel['judul']}", key=f"btn_artikel_{artikel['id']}_{idx}"):
+                                            st.session_state.chatbot_selected_article = artikel
+                                            st.rerun()
+                                        break
+
+        # Chat input stays outside the columns so it pins correctly at the bottom
         prompt = st.chat_input("Ceritakan masalah hukum anda... Atau ketik 'baca artikel [topik]' untuk membaca artikel")
-        
+
         if prompt:
-            # CEK PERINTAH BACA ARTIKEL DENGAN KATA KUNCI TERTENTU
             if prompt.lower().startswith("baca artikel") or prompt.lower().startswith("artikel"):
-                # Ekstrak kata kunci setelah "baca artikel" atau "artikel"
                 kata_kunci = prompt.lower().replace("baca artikel", "").replace("artikel", "").strip()
-                
+
                 if kata_kunci:
-                    # Cari artikel berdasarkan kata kunci
                     artikel_ditemukan = cari_artikel_by_keyword(kata_kunci)
-                    
+
                     if artikel_ditemukan:
-                        # Tambahkan pesan user ke history
-                        with st.chat_message("user"):
-                            st.write(prompt)
                         st.session_state.messages.append({"role": "user", "content": prompt})
-                        
-                        # Tampilkan artikel
                         st.session_state.chatbot_selected_article = artikel_ditemukan
                         st.rerun()
                     else:
-                        # Jika tidak ditemukan, beri respons
-                        with st.chat_message("user"):
-                            st.write(prompt)
                         st.session_state.messages.append({"role": "user", "content": prompt})
-                        
-                        with st.chat_message("assistant", avatar="⚖️"):
-                            st.write(f"Maaf, saya tidak menemukan artikel tentang '{kata_kunci}'. Berikut topik artikel yang tersedia:\n\n"
-                                    f"- pelecehan / kekerasan seksual\n"
-                                    f"- KDRT / kekerasan rumah tangga\n"
-                                    f"- penipuan online\n"
-                                    f"- PHK / pesangon\n"
-                                    f"- tipu lowongan kerja\n"
-                                    f"- pencemaran nama baik / ITE\n"
-                                    f"- sengketa tanah / warisan\n"
-                                    f"- pinjol ilegal\n"
-                                    f"- pencurian\n"
-                                    f"- perceraian\n\n"
-                                    f"Ketik `baca artikel [topik]` dengan topik yang sesuai.")
-                        
-                        st.session_state.messages.append({"role": "assistant", "content": f"Maaf, saya tidak menemukan artikel tentang '{kata_kunci}'."})
+                        st.session_state.messages.append({
+                            "role": "assistant",
+                            "content": (
+                                f"Maaf, saya tidak menemukan artikel tentang '{kata_kunci}'. Berikut topik artikel yang tersedia:\n\n"
+                                f"- pelecehan / kekerasan seksual\n- KDRT / kekerasan rumah tangga\n- penipuan online\n"
+                                f"- PHK / pesangon\n- tipu lowongan kerja\n- pencemaran nama baik / ITE\n"
+                                f"- sengketa tanah / warisan\n- pinjol ilegal\n- pencurian\n- perceraian\n\n"
+                                f"Ketik `baca artikel [topik]` dengan topik yang sesuai."
+                            )
+                        })
+                        st.rerun()
                 else:
-                    # Jika hanya "baca artikel" tanpa kata kunci
-                    with st.chat_message("user"):
-                        st.write(prompt)
                     st.session_state.messages.append({"role": "user", "content": prompt})
-                    
-                    with st.chat_message("assistant", avatar="⚖️"):
-                        st.write("Silakan tentukan topik artikel yang ingin Anda baca. Contoh:\n\n"
-                                f"- `baca artikel pelecehan`\n"
-                                f"- `baca artikel KDRT`\n"
-                                f"- `baca artikel penipuan online`\n"
-                                f"- `baca artikel PHK`\n\n"
-                                f"Atau ketik `menu` untuk konsultasi hukum.")
-                    
-                    st.session_state.messages.append({"role": "assistant", "content": "Silakan tentukan topik artikel yang ingin dibaca."})
-            
-            # PROSES KONSULTASI NORMAL
+                    st.session_state.messages.append({
+                        "role": "assistant",
+                        "content": (
+                            "Silakan tentukan topik artikel yang ingin Anda baca. Contoh:\n\n"
+                            "- `baca artikel pelecehan`\n- `baca artikel KDRT`\n- `baca artikel penipuan online`\n- `baca artikel PHK`\n\n"
+                            "Atau ketik `menu` untuk konsultasi hukum."
+                        )
+                    })
+                    st.rerun()
             else:
-                # Add user message
-                with st.chat_message("user"):
-                    st.write(prompt)
                 st.session_state.messages.append({"role": "user", "content": prompt})
-                
-                # Process response
+
                 if prompt.lower() in ["reset", "mulai ulang", "baru"]:
                     st.session_state.fsm.reset()
                     response = st.session_state.fsm._menu_utama("✨ Sesi direset. Mulai konsultasi baru:")
                 else:
                     response = st.session_state.fsm.transition(prompt)
-                
-                # Format and add bot response
+
                 if response["type"] == "menu":
                     msg_text = f"**{response['title']}**\n\n{response['text']}\n\n"
                     for opt in response["options"]:
                         msg_text += f"`{opt['key']}` {opt['label']}\n"
-                    
-                    msg_data = {"role": "assistant", "content": msg_text}
-                    with st.chat_message("assistant", avatar="⚖️"):
-                        st.write(msg_text)
-                        st.markdown("---")
-                        st.caption("💡 *Ketik 'baca artikel [topik]' untuk membaca artikel. Contoh: baca artikel pelecehan*")
-                    st.session_state.messages.append(msg_data)
-                    
+                    st.session_state.messages.append({"role": "assistant", "content": msg_text})
+
                 elif response["type"] == "result":
                     msg_text = f"""
 **📋 HASIL KONSULTASI**
@@ -928,247 +894,185 @@ elif selected == "Chatbot":
 """
                     for d in response['dokumen']:
                         msg_text += f"• {d}\n"
-                    
+
                     msg_text += f"""
-**👨‍⚖️ Rekomendasi:** {response['advokat']}
+**🧑‍⚖️ Rekomendasi:** {response['advokat']}
 
 ---
 Ketik `reset` untuk konsultasi baru.
 """
-                    # Tambahkan link artikel jika ada
                     msg_data = {"role": "assistant", "content": msg_text}
                     if "artikel" in response and response["artikel"]:
                         msg_data["artikel_link"] = response["artikel"]["id"]
-                        msg_text += f"\n\n📖 **Baca artikel selengkapnya dengan klik tombol di bawah ini!**"
+                        msg_text += "\n\n📖 **Baca artikel selengkapnya dengan klik tombol di bawah ini!**"
                         msg_data["content"] = msg_text
-                    
-                    with st.chat_message("assistant", avatar="⚖️"):
-                        st.write(msg_text)
-                        if "artikel" in response and response["artikel"]:
-                            artikel_info = response["artikel"]
-                            for artikel in db["artikel"]:
-                                if artikel["id"] == artikel_info["id"]:
-                                    if st.button(f"📖 Baca Artikel: {artikel['judul']}", key=f"btn_artikel_{artikel['id']}_{len(st.session_state.messages)}", use_container_width=True):
-                                        st.session_state.chatbot_selected_article = artikel
-                                        st.rerun()
-                                    break
-                        st.markdown("---")
-                        st.caption("💡 *Ketik 'baca artikel [topik]' untuk membaca artikel lain. Contoh: baca artikel KDRT*")
-                    
+
                     st.session_state.messages.append(msg_data)
-                    
+
                 else:
-                    with st.chat_message("assistant", avatar="⚖️"):
-                        st.write(response.get("text", "Maaf, saya tidak mengerti. Silakan coba lagi."))
-                        st.markdown("---")
-                        st.caption("💡 *Ketik 'baca artikel [topik]' untuk membaca artikel. Contoh: baca artikel pelecehan*")
                     st.session_state.messages.append({"role": "assistant", "content": response.get("text", "Maaf, saya tidak mengerti.")})
+
+                st.rerun()
 
 # ============================================================
 # ADVOKAT PAGE
 # ============================================================
 elif selected == "Advokat":
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-                padding: 2.5rem; border-radius: 1.5rem; color: white; margin-bottom: 2.5rem;
-                position: relative; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
-        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; 
-                    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); 
-                    transform: rotate(45deg);"></div>
-        <h1 style="margin: 0; font-weight: 700; position: relative; z-index: 1;">👨‍⚖️ Informasi Advokat</h1>
-        <p style="margin: 0.5rem 0 0 0; opacity: 0.9; position: relative; z-index: 1;">
-            Temukan advokat berpengalaman dan berlisensi sesuai kebutuhan hukum Anda
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Filter
+    render_page_header("🧑‍⚖️", "Informasi Advokat", "Temukan advokat berpengalaman dan berlisensi sesuai kebutuhan hukum Anda")
+
     spesialisasi_list = ["Semua"] + sorted(list(set([a["spesialisasi"] for a in db["advokat"]])))
-    selected_spesialisasi = st.selectbox("Filter Spesialisasi", spesialisasi_list)
-    
+    chip_cols = st.columns(len(spesialisasi_list))
+    for i, sp in enumerate(spesialisasi_list):
+        with chip_cols[i]:
+            if st.button(sp, key=f"adv_chip_{sp}", use_container_width=True):
+                st.session_state.advokat_filter_spesialisasi = sp
+
+    selected_spesialisasi = st.session_state.advokat_filter_spesialisasi
     filtered_advokat = db["advokat"] if selected_spesialisasi == "Semua" else [a for a in db["advokat"] if a["spesialisasi"] == selected_spesialisasi]
-    
-    st.markdown(f"<p style='color: #64748b; margin-bottom: 1.5rem;'>Menampilkan {len(filtered_advokat)} advokat</p>", unsafe_allow_html=True)
-    
-    for adv in filtered_advokat:
+
+    st.markdown(f"<p style='color: var(--muted); margin: 1rem 0;'>Menampilkan {len(filtered_advokat)} advokat</p>", unsafe_allow_html=True)
+
+    grid_cols = st.columns(2)
+    for idx, adv in enumerate(filtered_advokat):
         badge_class = f"badge-{adv['spesialisasi'].lower()}"
-        with st.container():
-            col1, col2 = st.columns([1, 4])
-            with col1:
-                st.markdown(f"""
-                <div style="width: 72px; height: 72px; background: linear-gradient(135deg, #6366f1, #8b5cf6); 
-                            border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-                            color: white; font-size: 1.5rem; font-weight: 700;
-                            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.3);">
-                    {adv['nama'][0]}
+        with grid_cols[idx % 2]:
+            st.markdown(f"""
+            <div class="advokat-grid-card">
+                <div class="advokat-avatar">{adv['nama'][0]}</div>
+                <h4>{adv['nama']}</h4>
+                <span class="badge {badge_class}">{adv['spesialisasi']}</span>
+                <div class="advokat-meta-grid">
+                    <span>📍 {adv['kota']} &nbsp;·&nbsp; ⏱ {adv['pengalaman']}</span>
+                    <span>⭐ {adv['rating']} &nbsp;·&nbsp; 📁 {adv['kasus']} kasus</span>
                 </div>
-                """, unsafe_allow_html=True)
-            with col2:
-                st.markdown(f"""
-                <div style="border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1.25rem; margin-bottom: 1rem;
-                            background: white; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                        <h3 style="margin: 0; color: #1e293b;">{adv['nama']}</h3>
-                        <span class="badge {badge_class}">{adv['spesialisasi']}</span>
-                    </div>
-                    <div style="display: flex; gap: 1.25rem; margin: 0.5rem 0; color: #64748b; font-size: 0.9rem; flex-wrap: wrap;">
-                        <span>📍 {adv['kota']}</span>
-                        <span>⏱ {adv['pengalaman']}</span>
-                        <span>⭐ {adv['rating']}</span>
-                        <span>📁 {adv['kasus']} kasus</span>
-                    </div>
-                    <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 0.25rem;">
-                        <code style="background: #f1f5f9; padding: 0.2rem 0.75rem; border-radius: 0.5rem; color: #1e293b;">📞 {adv['telepon']}</code>
-                        <code style="background: #f1f5f9; padding: 0.2rem 0.75rem; border-radius: 0.5rem; color: #1e293b;">✉️ {adv['email']}</code>
-                    </div>
+                <div class="advokat-contact-grid">
+                    <code>📞 {adv['telepon']}</code>
+                    <code>✉️ {adv['email']}</code>
                 </div>
-                """, unsafe_allow_html=True)
+            </div>
+            """, unsafe_allow_html=True)
+            st.write("")
+
+    render_footer()
 
 # ============================================================
 # ARTIKEL PAGE
 # ============================================================
 elif selected == "Artikel":
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-                padding: 2.5rem; border-radius: 1.5rem; color: white; margin-bottom: 2.5rem;
-                position: relative; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
-        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; 
-                    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); 
-                    transform: rotate(45deg);"></div>
-        <h1 style="margin: 0; font-weight: 700; position: relative; z-index: 1;">📚 Artikel Hukum</h1>
-        <p style="margin: 0.5rem 0 0 0; opacity: 0.9; position: relative; z-index: 1;">
-            Perluas pengetahuan hukum Anda melalui artikel informatif dari para ahli
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
+    render_page_header("📚", "Artikel Hukum", "Perluas pengetahuan hukum Anda melalui artikel informatif dari para ahli")
+
     if st.session_state.selected_article is None:
-        # Filter
         kategori_list = ["Semua"] + sorted(list(set([a["kategori"] for a in db["artikel"]])))
-        selected_kategori = st.selectbox("Filter Kategori", kategori_list)
-        
+        chip_cols = st.columns(len(kategori_list))
+        for i, kat in enumerate(kategori_list):
+            with chip_cols[i]:
+                if st.button(kat, key=f"art_chip_{kat}", use_container_width=True):
+                    st.session_state.artikel_filter_kategori = kat
+
+        selected_kategori = st.session_state.artikel_filter_kategori
         filtered_artikel = db["artikel"] if selected_kategori == "Semua" else [a for a in db["artikel"] if a["kategori"] == selected_kategori]
-        
-        st.markdown(f"<p style='color: #64748b; margin-bottom: 1.5rem;'>Menampilkan {len(filtered_artikel)} artikel</p>", unsafe_allow_html=True)
-        
-        for artikel in filtered_artikel:
+
+        st.markdown(f"<p style='color: var(--muted); margin: 1rem 0;'>Menampilkan {len(filtered_artikel)} artikel</p>", unsafe_allow_html=True)
+
+        grid_cols = st.columns(3)
+        for idx, artikel in enumerate(filtered_artikel):
             badge_class = f"badge-{artikel['kategori'].lower()}"
-            with st.expander(f"📄 {artikel['judul']}"):
+            with grid_cols[idx % 3]:
                 st.markdown(f"""
-                <div>
+                <div class="card">
                     <span class="badge {badge_class}">{artikel['kategori']}</span>
-                    <p style="color: #64748b; margin: 0.5rem 0;">✍ {artikel['penulis']} · 📅 {artikel['tanggal']} · 👁 {artikel['baca']} dibaca</p>
-                    <div style="line-height: 1.8; color: #334155;">{artikel['isi']}</div>
+                    <h4>{artikel['judul']}</h4>
+                    <p style="color: var(--muted); font-size: 0.85rem;">{artikel['ringkasan'][:110]}...</p>
+                    <p style="color: #8891A6; font-size: 0.75rem;">✍ {artikel['penulis']} · 📅 {artikel['tanggal']} · 👁 {artikel['baca']}</p>
                 </div>
                 """, unsafe_allow_html=True)
+                if st.button("Baca Selengkapnya →", key=f"art_read_{artikel['id']}_{idx}", use_container_width=True):
+                    st.session_state.selected_article = artikel
+                    st.rerun()
+                st.write("")
     else:
-        # Show article detail
         artikel = st.session_state.selected_article
-        
-        if st.button("← Kembali ke Daftar Artikel", use_container_width=True):
+
+        if st.button("← Kembali ke Daftar Artikel"):
             st.session_state.selected_article = None
             st.rerun()
-        
+
         badge_class = f"badge-{artikel['kategori'].lower()}"
         st.markdown(f"""
-        <div style="background: white; border-radius: 1.25rem; padding: 2.5rem; 
-                    border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+        <div class="article-detail">
             <span class="badge {badge_class}">{artikel['kategori']}</span>
-            <h1 style="margin: 1rem 0 0.5rem 0; color: #1e293b;">{artikel['judul']}</h1>
-            <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; color: #64748b; font-size: 0.9rem;">
+            <h1 style="margin: 1rem 0 0.5rem 0;">{artikel['judul']}</h1>
+            <div class="article-detail-meta">
                 <span>✍ {artikel['penulis']}</span>
                 <span>📅 {artikel['tanggal']}</span>
                 <span>👁 {artikel['baca']} dibaca</span>
             </div>
-            <div style="border-top: 1px solid #e2e8f0; padding-top: 1.5rem; line-height: 1.8; color: #334155;">
-                {artikel['isi']}
-            </div>
+            <div class="article-detail-body">{artikel['isi']}</div>
         </div>
         """, unsafe_allow_html=True)
+
+    render_footer()
 
 # ============================================================
 # FAQ PAGE
 # ============================================================
 elif selected == "FAQ":
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-                padding: 2.5rem; border-radius: 1.5rem; color: white; margin-bottom: 2.5rem;
-                position: relative; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
-        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; 
-                    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); 
-                    transform: rotate(45deg);"></div>
-        <h1 style="margin: 0; font-weight: 700; position: relative; z-index: 1;">❓ Pertanyaan Umum (FAQ)</h1>
-        <p style="margin: 0.5rem 0 0 0; opacity: 0.9; position: relative; z-index: 1;">
-            Temukan jawaban dari pertanyaan yang paling sering ditanyakan
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Category filter
+    render_page_header("❓", "Pertanyaan Umum (FAQ)", "Temukan jawaban dari pertanyaan yang paling sering ditanyakan")
+
     kategori_list = ["Semua"] + sorted(list(set([f["kategori"] for f in db["faq"]])))
-    cols = st.columns(min(len(kategori_list), 4))
+    cols = st.columns(len(kategori_list))
     for idx, kat in enumerate(kategori_list):
-        with cols[idx % 4]:
+        with cols[idx]:
             if st.button(kat, key=f"faq_cat_{kat}", use_container_width=True):
                 st.session_state.selected_faq_category = kat
                 st.rerun()
-    
+
     filtered_faq = db["faq"] if st.session_state.selected_faq_category == "Semua" else [f for f in db["faq"] if f["kategori"] == st.session_state.selected_faq_category]
-    
-    st.markdown(f"<p style='color: #64748b; margin-bottom: 1.5rem;'>Menampilkan {len(filtered_faq)} pertanyaan</p>", unsafe_allow_html=True)
-    
-    for faq in filtered_faq:
-        with st.expander(f"📌 {faq['pertanyaan']}"):
-            st.markdown(f"<div style='color: #334155; line-height: 1.8;'>{faq['jawaban']}</div>", unsafe_allow_html=True)
-            st.caption(f"Kategori: {faq['kategori']}")
+
+    st.markdown(f"<p style='color: var(--muted); margin: 1rem 0;'>Menampilkan {len(filtered_faq)} pertanyaan</p>", unsafe_allow_html=True)
+
+    # Two-column FAQ grid
+    faq_cols = st.columns(2)
+    for idx, faq in enumerate(filtered_faq):
+        with faq_cols[idx % 2]:
+            with st.expander(f"📌 {faq['pertanyaan']}"):
+                st.markdown(f"<p>{faq['jawaban']}</p>", unsafe_allow_html=True)
+                st.caption(f"Kategori: {faq['kategori']}")
+
+    render_footer()
 
 # ============================================================
 # KONTAK PAGE
 # ============================================================
 elif selected == "Kontak":
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-                padding: 2.5rem; border-radius: 1.5rem; color: white; margin-bottom: 2.5rem;
-                position: relative; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
-        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; 
-                    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); 
-                    transform: rotate(45deg);"></div>
-        <h1 style="margin: 0; font-weight: 700; position: relative; z-index: 1;">📞 Hubungi Kami</h1>
-        <p style="margin: 0.5rem 0 0 0; opacity: 0.9; position: relative; z-index: 1;">
-            Ada pertanyaan atau masukan? Kami siap membantu Anda
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2 = st.columns(2)
-    
+    render_page_header("📞", "Hubungi Kami", "Ada pertanyaan atau masukan? Kami siap membantu Anda")
+
+    col1, col2 = st.columns([0.9, 1.1])
+
     with col1:
         st.markdown("""
-        <div style="background: white; padding: 1.75rem; border-radius: 1.25rem; border: 1px solid #e2e8f0;
-                    box-shadow: 0 1px 3px rgba(0,0,0,0.06); height: 100%;">
-            <h3 style="color: #1e293b; margin-bottom: 1.25rem;">Informasi Kontak</h3>
-            <div style="space-y: 0.5rem;">
-                <p style="color: #475569; margin: 0.5rem 0;"><strong style="color: #1e293b;">📞 Telepon:</strong> (021) 5678-9012</p>
-                <p style="color: #475569; margin: 0.5rem 0;"><strong style="color: #1e293b;">✉️ Email:</strong> info@legalassist.id</p>
-                <p style="color: #475569; margin: 0.5rem 0;"><strong style="color: #1e293b;">📍 Alamat:</strong> Jl. Hukum No. 1, Jakarta Pusat</p>
-                <p style="color: #475569; margin: 0.5rem 0;"><strong style="color: #1e293b;">🕒 Jam Layanan:</strong> Senin–Jumat, 08:00–17:00</p>
+        <div class="card">
+            <h3 style="margin-top:0;">Informasi Kontak</h3>
+            <div class="chat-side-card" style="border:none; padding:0.6rem 0;">
+                <p style="margin:0.4rem 0;">📞 &nbsp;<strong>(021) 5678-9012</strong></p>
+                <p style="margin:0.4rem 0;">✉️ &nbsp;<strong>info@legalassist.id</strong></p>
+                <p style="margin:0.4rem 0;">📍 &nbsp;Jl. Hukum No. 1, Jakarta Pusat</p>
+                <p style="margin:0.4rem 0;">🕒 &nbsp;Senin–Jumat, 08:00–17:00</p>
             </div>
-            <hr style="border-color: #e2e8f0; margin: 1.25rem 0;">
-            <div style="background: #f8fafc; padding: 1rem; border-radius: 0.75rem; border-left: 3px solid #6366f1;">
-                <p style="margin: 0; color: #475569;"><strong>💬 Chatbot</strong> tersedia 24/7 untuk konsultasi dasar.</p>
-            </div>
+            <hr>
+            <p style="color: var(--muted); font-size: 0.88rem;">💬 <strong>Chatbot</strong> tersedia 24/7 untuk konsultasi dasar, tanpa perlu menunggu jam kerja.</p>
         </div>
         """, unsafe_allow_html=True)
-    
+
     with col2:
         with st.form("kontak_form"):
-            st.markdown("<h3 style='color: #1e293b; margin-bottom: 1rem;'>Kirim Pesan</h3>", unsafe_allow_html=True)
-            nama = st.text_input("Nama Lengkap", placeholder="Masukkan nama lengkap Anda")
-            email = st.text_input("Email", placeholder="Masukkan alamat email Anda")
-            subjek = st.text_input("Subjek", placeholder="Masukkan subjek pesan")
-            pesan = st.text_area("Pesan", height=150, placeholder="Tuliskan pesan Anda di sini...")
+            st.markdown("<h3 style='margin-top:0;'>Kirim Pesan</h3>", unsafe_allow_html=True)
+            nama = st.text_input("Nama Lengkap")
+            email = st.text_input("Email")
+            subjek = st.text_input("Subjek")
+            pesan = st.text_area("Pesan", height=140)
             submitted = st.form_submit_button("Kirim Pesan", use_container_width=True)
-            
+
             if submitted:
                 if nama and email and subjek and pesan:
                     new_pesan = {
@@ -1183,67 +1087,62 @@ elif selected == "Kontak":
                     db["pesan"].append(new_pesan)
                     st.success("✅ Pesan berhasil dikirim! Kami akan segera menghubungi Anda.")
                 else:
-                    st.error("⚠️ Semua field harus diisi.")
+                    st.error("Semua field harus diisi.")
+
+    render_footer()
 
 # ============================================================
 # ADMIN PAGE
 # ============================================================
 elif selected == "Admin":
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%);
-                padding: 2.5rem; border-radius: 1.5rem; color: white; margin-bottom: 2.5rem;
-                position: relative; overflow: hidden; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);">
-        <div style="position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; 
-                    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); 
-                    transform: rotate(45deg);"></div>
-        <h1 style="margin: 0; font-weight: 700; position: relative; z-index: 1;">🔒 Panel Admin</h1>
-        <p style="margin: 0.5rem 0 0 0; opacity: 0.9; position: relative; z-index: 1;">
-            Kelola advokat, artikel, FAQ, dan pesan
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
+    render_page_header("🔒", "Panel Admin", "Kelola advokat, artikel, FAQ, dan pesan")
+
     if not st.session_state.admin_logged_in:
-        with st.form("login_form"):
-            st.markdown("""
-            <div style="background: white; padding: 2rem; border-radius: 1rem; border: 1px solid #e2e8f0;">
-            """, unsafe_allow_html=True)
-            username = st.text_input("Username", placeholder="Masukkan username")
-            password = st.text_input("Password", type="password", placeholder="Masukkan password")
-            submitted = st.form_submit_button("Login", use_container_width=True)
-            st.markdown("</div>", unsafe_allow_html=True)
-            
-            if submitted:
-                if username == db["admin"]["username"] and password == db["admin"]["password"]:
-                    st.session_state.admin_logged_in = True
-                    st.success("✅ Login berhasil!")
-                    st.rerun()
-                else:
-                    st.error("❌ Username atau password salah.")
+        col_l, col_m, col_r = st.columns([1, 1, 1])
+        with col_m:
+            with st.form("login_form"):
+                st.markdown("<h3 style='margin-top:0;'>Login Admin</h3>", unsafe_allow_html=True)
+                username = st.text_input("Username")
+                password = st.text_input("Password", type="password")
+                submitted = st.form_submit_button("Login", use_container_width=True)
+
+                if submitted:
+                    if username == db["admin"]["username"] and password == db["admin"]["password"]:
+                        st.session_state.admin_logged_in = True
+                        st.success("Login berhasil!")
+                        st.rerun()
+                    else:
+                        st.error("Username atau password salah.")
     else:
-        st.success("👋 Selamat datang, Admin!")
-        
-        col1, col2, col3 = st.columns([1, 1, 4])
-        with col1:
-            if st.button("🚪 Logout", use_container_width=True):
+        col_welcome, col_logout = st.columns([4, 1])
+        with col_welcome:
+            st.success("Selamat datang, Admin!")
+        with col_logout:
+            if st.button("Logout", use_container_width=True):
                 st.session_state.admin_logged_in = False
                 st.rerun()
-        
-        tab1, tab2, tab3, tab4 = st.tabs(["📊 Dashboard", "👨‍⚖️ Advokat", "📚 Artikel", "❓ FAQ"])
-        
+
+        tab1, tab2, tab3, tab4 = st.tabs(["📊 Dashboard", "⚖️ Advokat", "📚 Artikel", "❓ FAQ"])
+
         with tab1:
-            st.markdown("<h3 style='color: #1e293b;'>Statistik</h3>", unsafe_allow_html=True)
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
-                st.metric("Total Konsultasi", db["stats"]["konsultasi"])
-            with col2:
-                st.metric("Total Advokat", len(db["advokat"]))
-            with col3:
-                st.metric("Total Artikel", len(db["artikel"]))
-            with col4:
-                st.metric("Total Pengguna", db["stats"]["pengguna"])
-            
-            st.markdown("<h3 style='color: #1e293b; margin-top: 2rem;'>Pesan Masuk</h3>", unsafe_allow_html=True)
+            stat_cols = st.columns(4)
+            stat_defs = [
+                ("Total Konsultasi", db["stats"]["konsultasi"]),
+                ("Total Advokat", len(db["advokat"])),
+                ("Total Artikel", len(db["artikel"])),
+                ("Total Pengguna", db["stats"]["pengguna"]),
+            ]
+            for c, (label, val) in zip(stat_cols, stat_defs):
+                with c:
+                    st.markdown(f"""
+                    <div class="stat-card">
+                        <div class="stat-number">{val}</div>
+                        <div class="stat-label">{label}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            st.write("")
+            st.markdown("### Pesan Masuk")
             pesan_list = db["pesan"][::-1]
             if pesan_list:
                 for p in pesan_list:
@@ -1252,21 +1151,21 @@ elif selected == "Admin":
                         st.write(f"**Pesan:** {p['pesan']}")
                         st.caption(f"Status: {p['status']}")
             else:
-                st.info("📭 Belum ada pesan masuk.")
-        
+                st.info("Belum ada pesan masuk.")
+
         with tab2:
-            st.markdown("<h3 style='color: #1e293b;'>Daftar Advokat</h3>", unsafe_allow_html=True)
+            st.markdown("### Daftar Advokat")
             for adv in db["advokat"]:
                 col1, col2 = st.columns([4, 1])
                 with col1:
                     st.write(f"**{adv['nama']}** - {adv['spesialisasi']} - {adv['kota']}")
                 with col2:
-                    if st.button("🗑️ Hapus", key=f"del_adv_{adv['id']}", use_container_width=True):
+                    if st.button("Hapus", key=f"del_adv_{adv['id']}"):
                         db["advokat"] = [a for a in db["advokat"] if a["id"] != adv["id"]]
                         st.rerun()
-            
-            st.markdown("<hr style='border-color: #e2e8f0; margin: 2rem 0;'>", unsafe_allow_html=True)
-            st.markdown("<h3 style='color: #1e293b;'>Tambah Advokat</h3>", unsafe_allow_html=True)
+
+            st.markdown("---")
+            st.markdown("### Tambah Advokat")
             with st.form("tambah_advokat"):
                 col1, col2 = st.columns(2)
                 with col1:
@@ -1277,8 +1176,8 @@ elif selected == "Admin":
                     kota = st.text_input("Kota")
                     telepon = st.text_input("Telepon")
                     email = st.text_input("Email")
-                
-                if st.form_submit_button("➕ Tambah Advokat", use_container_width=True):
+
+                if st.form_submit_button("Tambah Advokat", use_container_width=True):
                     if nama and telepon and email:
                         baru = {
                             "id": len(db["advokat"]) + 1,
@@ -1292,30 +1191,30 @@ elif selected == "Admin":
                             "kasus": 0
                         }
                         db["advokat"].append(baru)
-                        st.success("✅ Advokat berhasil ditambahkan!")
+                        st.success("Advokat berhasil ditambahkan!")
                         st.rerun()
                     else:
-                        st.error("⚠️ Nama, Telepon, dan Email wajib diisi.")
-        
+                        st.error("Nama, Telepon, dan Email wajib diisi.")
+
         with tab3:
-            st.markdown("<h3 style='color: #1e293b;'>Daftar Artikel</h3>", unsafe_allow_html=True)
+            st.markdown("### Daftar Artikel")
             for art in db["artikel"]:
                 with st.expander(f"📄 {art['judul']} - {art['kategori']}"):
                     st.write(f"**Penulis:** {art['penulis']}")
                     st.write(f"**Tanggal:** {art['tanggal']}")
                     st.write(f"**Isi:** {art['isi'][:200]}...")
-                    if st.button("🗑️ Hapus", key=f"del_art_{art['id']}"):
+                    if st.button("Hapus", key=f"del_art_{art['id']}"):
                         db["artikel"] = [a for a in db["artikel"] if a["id"] != art["id"]]
                         st.rerun()
-            
-            st.markdown("<hr style='border-color: #e2e8f0; margin: 2rem 0;'>", unsafe_allow_html=True)
-            st.markdown("<h3 style='color: #1e293b;'>Tambah Artikel</h3>", unsafe_allow_html=True)
+
+            st.markdown("---")
+            st.markdown("### Tambah Artikel")
             with st.form("tambah_artikel"):
                 judul = st.text_input("Judul")
                 kategori = st.selectbox("Kategori", ["Pidana", "Perdata", "Keluarga", "Ketenagakerjaan"])
                 isi = st.text_area("Isi Artikel", height=200)
-                
-                if st.form_submit_button("➕ Tambah Artikel", use_container_width=True):
+
+                if st.form_submit_button("Tambah Artikel", use_container_width=True):
                     if judul and isi:
                         baru = {
                             "id": len(db["artikel"]) + 1,
@@ -1328,29 +1227,29 @@ elif selected == "Admin":
                             "baca": 0
                         }
                         db["artikel"].append(baru)
-                        st.success("✅ Artikel berhasil ditambahkan!")
+                        st.success("Artikel berhasil ditambahkan!")
                         st.rerun()
                     else:
-                        st.error("⚠️ Judul dan Isi Artikel wajib diisi.")
-        
+                        st.error("Judul dan Isi Artikel wajib diisi.")
+
         with tab4:
-            st.markdown("<h3 style='color: #1e293b;'>Daftar FAQ</h3>", unsafe_allow_html=True)
+            st.markdown("### Daftar FAQ")
             for faq in db["faq"]:
                 with st.expander(f"❓ {faq['pertanyaan']}"):
                     st.write(f"**Jawaban:** {faq['jawaban']}")
                     st.write(f"**Kategori:** {faq['kategori']}")
-                    if st.button("🗑️ Hapus", key=f"del_faq_{faq['id']}"):
+                    if st.button("Hapus", key=f"del_faq_{faq['id']}"):
                         db["faq"] = [f for f in db["faq"] if f["id"] != faq["id"]]
                         st.rerun()
-            
-            st.markdown("<hr style='border-color: #e2e8f0; margin: 2rem 0;'>", unsafe_allow_html=True)
-            st.markdown("<h3 style='color: #1e293b;'>Tambah FAQ</h3>", unsafe_allow_html=True)
+
+            st.markdown("---")
+            st.markdown("### Tambah FAQ")
             with st.form("tambah_faq"):
                 pertanyaan = st.text_input("Pertanyaan")
                 jawaban = st.text_area("Jawaban", height=100)
                 kategori = st.text_input("Kategori", value="Umum")
-                
-                if st.form_submit_button("➕ Tambah FAQ", use_container_width=True):
+
+                if st.form_submit_button("Tambah FAQ", use_container_width=True):
                     if pertanyaan and jawaban:
                         baru = {
                             "id": len(db["faq"]) + 1,
@@ -1359,7 +1258,7 @@ elif selected == "Admin":
                             "kategori": kategori
                         }
                         db["faq"].append(baru)
-                        st.success("✅ FAQ berhasil ditambahkan!")
+                        st.success("FAQ berhasil ditambahkan!")
                         st.rerun()
                     else:
-                        st.error("⚠️ Pertanyaan dan Jawaban wajib diisi.")
+                        st.error("Pertanyaan dan Jawaban wajib diisi.")
